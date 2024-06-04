@@ -15,8 +15,8 @@ yarn start:dev
 
 
 ## API
-```http
-  ### Expect Todos API
+```text
+  --- Expect Todos API
 
   GET http://localhost:8000/api/todos
 
@@ -36,7 +36,7 @@ yarn start:dev
   DELETE http://localhost:8000/api/todos/:id
 
 
-  ### Expect Posts API
+  --- Expect Posts API
 
   GET http://localhost:8000/api/posts?skip=0&take=10
 
