@@ -20,7 +20,16 @@ export class PostsController {
   }
 
   @Get()
-  findAll(@Query() query: { skip?: number; take?: number }) {
+  findAll(
+    @Query()
+    query: {
+      skip?: number;
+      take?: number;
+      title?: string;
+      name?: string;
+      content?: string;
+    },
+  ) {
     return this.postsService.findAll(query);
   }
 

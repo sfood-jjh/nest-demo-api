@@ -17,28 +17,45 @@ export class PostsService {
     });
   }
 
-  async findAll(payload: { skip?: number; take?: number }) {
-    const skip = +(payload?.skip || 0);
-    const take = +(payload?.take || 10);
+  async findAll(payload: {
+    skip?: number;
+    take?: number;
+    title?: string;
+    name?: string;
+    content?: string;
+  }) {
+    const { skip, take, title, name, content } = payload;
 
-    console.log(skip, take);
+    const pagination = {
+      skip: +(skip || 0),
+      take: +(take || 10),
+    };
+
+    const where = {
+      title: title ? { contains: title } : undefined,
+      name: name ? { contains: name } : undefined,
+      content: content ? { contains: content } : undefined,
+    };
 
     const [count, list] = await this.prisma.$transaction([
       this.prisma.post.count({
-        skip,
-        take,
+        where: {
+          ...where,
+        },
+        ...pagination,
       }),
       this.prisma.post.findMany({
-        skip,
-        take,
+        where: {
+          ...where,
+        },
+        ...pagination,
       }),
     ]);
 
     return {
       total: count,
       list,
-      skip,
-      take,
+      ...pagination,
     };
   }
 
